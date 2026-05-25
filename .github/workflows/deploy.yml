@@ -2,7 +2,7 @@ name: pages build and deployment
 
 on:
   push:
-    branches: [ main ] # 触发分支，你改成了main，这里没问题
+    branches: [ main ]
 
 permissions:
   contents: read
@@ -17,32 +17,33 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      # 1. 拉取你的代码到运行环境
+      # 1. 拉取代码
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # 2. 配置Node.js环境（适配Vue项目）
+      # 2. 配置Node.js环境
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 18 # 用你项目兼容的Node版本，16/18/20都可以
+          node-version: 18
           cache: 'npm'
 
-      # 3. 安装依赖并构建项目
+      # 3. 进入client目录，安装依赖并构建
       - name: Install dependencies and build
         run: |
+          cd client
           npm install
           npm run build
 
-      # 4. 上传构建产物（dist文件夹）
+      # 4. 上传构建产物（client/dist文件夹）
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./dist # Vue项目默认构建输出目录，不要改！
+          path: ./client/dist
 
-  # 部署到GitHub Pages的任务
+  # 部署任务
   deploy:
-    needs: build # 必须等build任务完成才执行
+    needs: build
     runs-on: ubuntu-latest
     environment:
       name: github-pages
