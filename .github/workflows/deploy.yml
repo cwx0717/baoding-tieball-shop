@@ -17,9 +17,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      # 1. 拉取你的代码
+      # 1. 拉取代码（加上fetch-depth: 0，解决git权限问题）
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       # 2. 配置Node.js环境
       - name: Setup Node.js
