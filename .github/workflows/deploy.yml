@@ -28,20 +28,20 @@ jobs:
           node-version: 18
           cache: 'npm'
 
-      # 3. 进入client目录，安装依赖并构建
+      # 3. 关键：进入client目录安装依赖并构建
       - name: Install dependencies and build
         run: |
           cd client
           npm install
           npm run build
 
-      # 4. 上传构建产物（client/dist文件夹）
+      # 4. 关键：上传client/dist目录的构建产物
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./client/dist
 
-  # 部署任务
+  # 部署任务（必须加上）
   deploy:
     needs: build
     runs-on: ubuntu-latest
