@@ -2,7 +2,7 @@ name: pages build and deployment
 
 on:
   push:
-    branches: [ main ] # 保持和你配置一致，main分支推送触发
+    branches: [ gh-pages ] # 改成 gh-pages 分支
 
 permissions:
   contents: read
@@ -32,7 +32,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './client/dist' # 你的前端打包产物目录
+          path: './client/dist'
 
   deploy:
     needs: build
